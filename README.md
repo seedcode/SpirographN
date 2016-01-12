@@ -1,5 +1,6 @@
 # SpirographN
-Based on the classic Spirograph toy; a Javascript drawing app, where you can add/nest multiple spinning circles (rotors).
+Based on the classic Spirograph toy.
+A Javascript drawing app where you can add/nest *n* gears (rotors) leading to endless possibilities of complex shapes and patterns.
 
 [Visit SpirographN at SeedCode](http://seedcode.com/SpirographN/sgn.html)
 
