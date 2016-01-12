@@ -24,4 +24,6 @@ Unfortunately, the canvas line rendering on Safari is not precise enough to get 
 [![puffesfish](img/tubular.png)](img/tubular.png)
 [http://seedcode.com/SpirographN/sgn.html?pre=tubular](http://seedcode.com/SpirographN/sgn.html?pre=tubular)
 
+##Developed By Dr. S
+
 [![DR.S](https://img.youtube.com/vi/-IYaftepO-s/0.jpg)](https://youtu.be/-IYaftepO-s)
