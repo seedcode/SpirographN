@@ -4,6 +4,10 @@ A Javascript drawing app where you can add/nest *n* number of gears (rotors) lea
 
 [Visit SpirographN at SeedCode](http://seedcode.com/SpirographN/sgn.html)
 
+##SpirographN in action
+
+[![truelove](img/drawing.png)](img/drawing.png)
+
 ##Sample Drawings Created in SpirographN
 
 [![truelove](img/truelove.png)](img/truelove.png)
