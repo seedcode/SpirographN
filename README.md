@@ -14,9 +14,16 @@ Unfortunately, the canvas line rendering on Safari is not precise enough to get 
 ##Sample Drawings Created with Spirograph&#8319;
 
 [![truelove](img/truelove.png)](img/truelove.png)
+[http://seedcode.com/SpirographN/sgn.html?pre=true%20love](http://seedcode.com/SpirographN/sgn.html?pre=true%20love)
+[![truelove](img/lilypad.png)](img/lilypad.png)
+[http://seedcode.com/SpirographN/sgn.html?pre=lily%20pad](http://seedcode.com/SpirographN/sgn.html?pre=lily%20pad)
 [![habitrail](img/habitrail.png)](img/habitrail.png)
+[http://seedcode.com/SpirographN/sgn.html?pre=habitrail](http://seedcode.com/SpirographN/sgn.html?pre=habitrail)
 [![puffesfish](img/pufferfish.png)](img/pufferfish.png)
+[http://seedcode.com/SpirographN/sgn.html?pre=pufferfish](http://seedcode.com/SpirographN/sgn.html?pre=pufferfish)
 [![puffesfish](img/tubular.png)](img/tubular.png)
+[http://seedcode.com/SpirographN/sgn.html?pre=tubular](http://seedcode.com/SpirographN/sgn.html?pre=tubular)
 
-[![DR.S](https://img.youtube.com/vi/-IYaftepO-s/0.jpg)](https://youtu.be/-IYaftepO-s)
+[![DR.S](https://img.youtube.com/vi/-IYaftepO-s/0.jpg)](#)
 
+[https://youtu.be/-IYaftepO-s)](https://youtu.be/-IYaftepO-s)
