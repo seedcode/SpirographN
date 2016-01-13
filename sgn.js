@@ -799,15 +799,29 @@ var sgn = (function(settings) {
 			settings.draw = false;
 			button.innerHTML = "draw";
 			settings.i = settings.iterator;
+			if (settings.circleReset) {
+				settings.circles = "show";
+				settings.circleReset = false;
+			}
+			drawCircles();
 			return;
 		}
+
+		//button hs been toggled
 		if (!settings.draw) {
+			if (settings.circleReset) {
+				settings.circles = "show";
+				settings.circleReset = false;
+			}
+			drawCircles();
 			return;
 		}
 
 		var c = 0;
 		var stu;
 
+		//adjust speed so 1 iteration per frame is the smallest we use
+		//if decimal is specified we add a timeout to the frame below.
 		if (settings.speed < 1) {
 			stu = 1
 		} else {
