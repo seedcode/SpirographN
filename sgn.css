@@ -42,7 +42,7 @@ body {
 		margin-left:-6px;
 		padding-left:6px;
 		overflow-y:scroll;
-		max-height:204px;
+		max-height:158px;
 		
 	}
 	
@@ -56,6 +56,17 @@ body {
 		width:200px;
 		height:73px;
 		display:block;
+	}
+	
+	a.git{
+		font-size:9pt;
+	}
+	
+	img.git {
+    width:20px;
+		height:20px;
+		padding-right:3px;
+		margin-bottom:-5px;
 	}
 		
 	span.typelabel{
@@ -87,7 +98,7 @@ body {
 		margin-left:4px;
 		margin-top:3px;
 		margin-right:3px;
-		width:50px;
+		width:38px;
 		outline:none;
 	}
 	
@@ -100,7 +111,7 @@ body {
 	}
 	
 	input.color{
-		width:55px;
+		width:43px;
     padding:0px;
 		height:16px;
 		margin-left:4px;
@@ -255,7 +266,7 @@ body {
 		font-size:12pt;
 		padding-top:6px;
 		padding-bottom:6px;
-		margin-bottom:1px;
+		margin-bottom:0px;
 		border-radius: 4px 4px 4px 4px;
 		cursor:pointer;
 	}

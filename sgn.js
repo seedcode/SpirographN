@@ -17,6 +17,7 @@ var sgn = (function(settings){
 		var a;
 		var d;
 		var o;
+		var i;
 		
 		//establish sidebar and pad
 		if(!sidebarId||!canvasDivId){
@@ -78,6 +79,10 @@ var sgn = (function(settings){
 		    settings.sidebarDiv.removeChild(settings.sidebarDiv.firstChild);
 		}
 				
+				
+		//Begin creating sidebar elements
+				
+				
 		//add static elements and values from preset
 		//add events to inputs
 		var e = document.createElement("SPAN");
@@ -89,7 +94,8 @@ var sgn = (function(settings){
 		e = document.createElement("DIV");
 		e.className="divSeparator";
 		settings.sidebarDiv.appendChild(e);
-		
+
+			
 		e = document.createElement("SPAN");
 		e.className="label";
 		e.innerHTML="presets";
@@ -107,8 +113,6 @@ var sgn = (function(settings){
 		}
 		settings.sidebarDiv.appendChild(sel)
 		presetEvent(settings.idNames.presets,"change");
-		
-
 		
 		e = document.createElement("DIV");
 		e.className="divSeparator";
@@ -129,7 +133,7 @@ var sgn = (function(settings){
 		
 		e = document.createElement("INPUT");
 		e.className="number";
-		e.setAttribute("type","number");
+		e.setAttribute("type","text");
 		e.setAttribute("value",d.st);
 		e.setAttribute("id",settings.idNames.stator);
 		settings.sidebarDiv.appendChild(e);
@@ -191,7 +195,7 @@ var sgn = (function(settings){
 		
 		e = document.createElement("INPUT");
 		e.className="number";
-		e.setAttribute("type","number");
+		e.setAttribute("type","text");
 		e.setAttribute("id",settings.idNames.pen);
 		settings.sidebarDiv.appendChild(e);
 		inputEvent(settings.idNames.pen,"input");
@@ -206,7 +210,7 @@ var sgn = (function(settings){
 		
 		e = document.createElement("INPUT");
 		e.className="number";
-		e.setAttribute("type","number");
+		e.setAttribute("type","text");
 		e.setAttribute("id",settings.idNames.width);
 		e.setAttribute("step",".01");
 		settings.sidebarDiv.appendChild(e);
@@ -306,6 +310,23 @@ var sgn = (function(settings){
     b.innerHTML="hide circles";
 		settings.sidebarDiv.appendChild(b);
 		hideButton(settings.idNames.hide);
+		
+		e = document.createElement("DIV");
+		e.className="divSeparator";
+		settings.sidebarDiv.appendChild(e);
+		
+	  a = document.createElement("A");
+		a.setAttribute("href","https://github.com/seedcode/SpirographN");
+		a.setAttribute("target","_blank");
+		a.className="git";
+		settings.sidebarDiv.appendChild(a);
+		
+		i = document.createElement("IMAGE");
+		i.setAttribute("src","img/gh.png");
+		i.className="git";
+		
+		a.appendChild(i);
+		a.innerHTML+="Download on GitHub";
 		
 		e = document.createElement("DIV");
 		e.className="divSeparator";
@@ -412,7 +433,7 @@ var sgn = (function(settings){
 		
     e = document.createElement("INPUT");
 		e.className="number";
-		e.setAttribute("type","number");
+		e.setAttribute("type","text");
 		e.setAttribute("id",settings.idNames.rotor+num);
 		e.setAttribute("value",r);
 		item.appendChild(e);
@@ -1149,7 +1170,7 @@ var sgn = (function(settings){
 				"pen":"25",
 				"wd":".01",
 				"cl":"#6A5ACD",
-				"sp":"3000",
+				"sp":"1000",
 			},
 						
 			{
@@ -1448,7 +1469,7 @@ var sgn = (function(settings){
 			},
 			{
 				"name":"fastest",
-				"speed":3000,	
+				"speed":1000,	
 			},	
 		]
 	}

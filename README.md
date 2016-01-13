@@ -5,7 +5,7 @@ Based on the classic Spirograph toy.
 
 A Javascript drawing app, using canvas, where you can add/nest *n* number of gears (rotors) leading to endless possibilities of complex shapes and patterns.
 
-Unfortunately, the canvas line rendering on Safari is not precise enough to get all the details in the more complex shapes. Chrome and FF give the best results.
+Unfortunately, the canvas line rendering on Safari is not precise enough to get all the details in the more complex shapes. Chrome gives the best results.
 
 ##Spirograph&#8319; in action
 
@@ -23,6 +23,8 @@ Unfortunately, the canvas line rendering on Safari is not precise enough to get 
 [http://seedcode.com/SpirographN/sgn.html?pre=pufferfish](http://seedcode.com/SpirographN/sgn.html?pre=pufferfish)
 [![puffesfish](img/tubular.png)](img/tubular.png)
 [http://seedcode.com/SpirographN/sgn.html?pre=tubular](http://seedcode.com/SpirographN/sgn.html?pre=tubular)
+[![truelove](img/burgessshale.png)](img/burgessshale.png)
+[http://seedcode.com/SpirographN/sgn.html?pre=burgess%20shale](http://seedcode.com/SpirographN/sgn.html?pre=burgess%20shale)
 
 ##Developed By Dr. S
 
