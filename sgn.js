@@ -27,9 +27,10 @@ var sgn = (function(settings) {
 
 	return {
 		load: load,
+		spot: spot,
 	}
 
-	//public function
+	//public functions
 
 	function load(sidebarId, canvasDivId) {
 
@@ -349,6 +350,14 @@ var sgn = (function(settings) {
 
 		a.appendChild(i);
 		a.innerHTML += "Download on GitHub";
+				
+		a = document.createElement("A");
+		a.setAttribute("id", settings.linkId);
+		a.setAttribute("href", "#");
+		a.setAttribute("target", "_blank");
+		a.className = "dl";
+		settings.sidebarDiv.appendChild(a);
+		a.innerHTML += "Settings URL";
 
 		e = document.createElement("DIV");
 		e.className = "divSeparator";
@@ -367,6 +376,23 @@ var sgn = (function(settings) {
 		window.onresize = function(e) {
 			resizeCanvas(e);
 		};
+	}
+	
+	function spot(d) {
+		var d = {
+			"a":"600",
+			"b":"600",
+			"sz":"600",
+			"canvasClass":"pad",
+			"closeFunction":"close",
+			"sr":"250",
+			"r1":"125h",
+			"pen":"125",
+			
+			
+			
+		}
+			
 	}
 
 	//private functions
@@ -562,8 +588,25 @@ var sgn = (function(settings) {
 			thisHId = settings.idNames.h + c;
 			thisEId = settings.idNames.e + c;
 		}
-
 		settings.numRotors = c - 1;
+		
+		//create url string for this config
+		c=0;
+		var u = window.location.origin + window.location.pathname;
+		for (c in settings.radii){
+			if(c==0){
+				u+="?st="+settings.radii[c];
+			}
+			else{
+				u+="&r"+c+"="+settings.radii[c]+settings.types[c];
+			}
+		}
+		u+="&pen="+settings.penRad;
+		u+="&wd="+settings.curveWidth;
+		u+="&cl="+settings.curveColor.substring(1);
+		settings.url=u;
+		document.getElementById(settings.linkId).innerHTML="Settings URL";
+		document.getElementById(settings.linkId).href=u;
 	}
 
 	function drawCanvas() {
@@ -857,6 +900,11 @@ var sgn = (function(settings) {
 			settings.circles = "hide";
 			settings.circleReset = true;
 		}
+		else if(settings.speed <= 50 && settings.circleReset && settings.circles === "hide"){
+			//we've slowed down, so we can show again
+			settings.circles = "show";
+			settings.circleReset = false;	
+		}
 
 		//run circles off for internal loop
 		if (settings.circles === "show") {
@@ -1128,6 +1176,7 @@ var sgn = (function(settings) {
 		},
 		"drawing": false,
 		"idNames": {
+			"linkId":"linkId",
 			"sidebar": "sidebar",
 			"pad": "pad",
 			"stator": "stator",

@@ -60,6 +60,23 @@ body {
 	
 	a.git{
 		font-size:9pt;
+    display: block;
+    width: 160px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+		margin-bottom:3px;
+	}
+	
+	a.dl{
+		font-size:9pt;
+    display: block;
+    width: 160px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+		padding-left:23px;
+		margin-bottom:3px;
 	}
 	
 	img.git {
