@@ -103,9 +103,7 @@ var sgn = (function(settings) {
 			settings.sidebarDiv.removeChild(settings.sidebarDiv.firstChild);
 		}
 
-
 		//Begin creating sidebar elements
-
 
 		//add static elements and values from preset
 		//add events to inputs
@@ -172,22 +170,10 @@ var sgn = (function(settings) {
 		e.innerHTML = "rotors";
 		settings.sidebarDiv.appendChild(e);
 
-		var b = document.createElement("BUTTON");
-		b.className = "add";
-		b.setAttribute("id", settings.idNames.add);
-		var i = document.createElement("IMG");
-		i.className = "add";
-		i.setAttribute("src", "img/add.png");
-		b.appendChild(i);
-		settings.sidebarDiv.appendChild(b);
-		addButton(settings.idNames.add);
+		addButton();
 
-		e = document.createElement("SPAN");
-		e.className = "buttonLabel";
-		e.innerHTML = "add rotor";
-		e.setAttribute("id", settings.idNames.addLabel);
+		e = document.createElement("BR");
 		settings.sidebarDiv.appendChild(e);
-		addButton(settings.idNames.addLabel);
 
 		e = document.createElement("DIV");
 		e.className = "rotors";
@@ -298,66 +284,54 @@ var sgn = (function(settings) {
 		}
 		settings.sidebarDiv.appendChild(e)
 		inputEvent(settings.idNames.speed, "change");
-		e = document.createElement("DIV");
-		e.className = "divSeparator";
-		settings.sidebarDiv.appendChild(e);
-
-		var b = document.createElement("BUTTON");
-		b.className = "draw";
-		b.setAttribute("id", settings.idNames.draw);
-		b.innerHTML = "draw";
-		settings.sidebarDiv.appendChild(b);
-		drawButton(settings.idNames.draw);
 
 		e = document.createElement("DIV");
 		e.className = "divSeparator";
 		settings.sidebarDiv.appendChild(e);
 
-		b = document.createElement("BUTTON");
-		b.className = "button";
-		b.setAttribute("id", settings.idNames.clear);
-		b.innerHTML = "clear drawing";
-		settings.sidebarDiv.appendChild(b);
-		clearButton(settings.idNames.clear);
-
-		b = document.createElement("BUTTON");
-		b.className = "button";
-		b.setAttribute("id", settings.idNames.reset);
-		b.innerHTML = "reset position";
-		settings.sidebarDiv.appendChild(b);
-		resetButton(settings.idNames.reset);
-
-		b = document.createElement("BUTTON");
-		b.className = "button";
-		b.setAttribute("id", settings.idNames.hide);
-		b.innerHTML = "hide circles";
-		settings.sidebarDiv.appendChild(b);
-		hideButton(settings.idNames.hide);
+		drawButton();
 
 		e = document.createElement("DIV");
 		e.className = "divSeparator";
 		settings.sidebarDiv.appendChild(e);
 
-		a = document.createElement("A");
-		a.setAttribute("href", "https://github.com/seedcode/SpirographN");
-		a.setAttribute("target", "_blank");
-		a.className = "git";
-		settings.sidebarDiv.appendChild(a);
+		//utility buttons
 
-		i = document.createElement("IMAGE");
-		i.setAttribute("src", "img/gh.png");
-		i.className = "git";
+		clearButton();
 
-		a.appendChild(i);
-		a.innerHTML += "Download on GitHub";
-				
-		a = document.createElement("A");
-		a.setAttribute("id", settings.linkId);
-		a.setAttribute("href", "#");
-		a.setAttribute("target", "_blank");
-		a.className = "dl";
-		settings.sidebarDiv.appendChild(a);
-		a.innerHTML += "Settings URL";
+		restartButton();
+
+		hideButton();
+
+		openImageButton();
+
+		settingsURLButton();
+
+		e = document.createElement("BR");
+		settings.sidebarDiv.appendChild(e);
+
+		zoomInButton();
+
+		zoomOutButton();
+
+		e = document.createElement("INPUT");
+		e.className = "angle";
+		e.setAttribute("type", "text");
+		e.setAttribute("id", settings.idNames.angle);
+		e.setAttribute("value", settings.iOffset);
+		e.setAttribute("title", "rotation increment");
+		settings.sidebarDiv.appendChild(e);
+		inputEvent(settings.idNames.angle, "input");
+
+		rotateButton();
+
+		resetButton();
+
+		e = document.createElement("DIV");
+		e.className = "divSeparator";
+		settings.sidebarDiv.appendChild(e);
+
+		gitButton();
 
 		e = document.createElement("DIV");
 		e.className = "divSeparator";
@@ -377,25 +351,293 @@ var sgn = (function(settings) {
 			resizeCanvas(e);
 		};
 	}
-	
+
 	function spot(d) {
 		var d = {
-			"a":"600",
-			"b":"600",
-			"sz":"600",
-			"canvasClass":"pad",
-			"closeFunction":"close",
-			"sr":"250",
-			"r1":"125h",
-			"pen":"125",
-			
-			
-			
+			"a": "600",
+			"b": "600",
+			"sz": "600",
+			"canvasClass": "pad",
+			"closeFunction": "close",
+			"sr": "250",
+			"r1": "125h",
+			"pen": "125",
+
+
+
 		}
-			
+
 	}
 
-	//private functions
+	// buttons
+
+	function addButton() {
+
+		var b = document.createElement("BUTTON");
+		b.setAttribute("class", "button add");
+		b.setAttribute("id", settings.idNames.add);
+		var i = document.createElement("IMG");
+		i.className = "add";
+		i.setAttribute("src", "img/add.png");
+		b.appendChild(i);
+		var s = document.createElement("SPAN");
+		s.className = "buttonTextSmall"
+		s.innerHTML += "add rotor";
+		b.appendChild(s);
+		settings.sidebarDiv.appendChild(b);
+
+
+		b.addEventListener("click", function() {
+
+			//get current last rotor radius
+			var newRad = document.getElementById(settings.idNames.rotor + settings.numRotors).value / 2;
+
+			//toggle types
+			if (document.getElementById(settings.idNames.e + settings.numRotors).checked) {
+				var type = "h";
+			} else {
+				var type = "e";
+			}
+
+			settings.numRotors++;
+
+			addRotor(settings.numRotors, newRad, type);
+
+			//update pen radius
+			document.getElementById(settings.idNames.pen).value = newRad;
+
+			//if this is the second rotor we need our delete button.
+			if (settings.numRotors === 2) {
+				deleteButton();
+			}
+
+			//scroll to the bottom
+			document.getElementById(settings.idNames.rotors).scrollTop = document.getElementById(settings.idNames.rotors).scrollHeight;
+
+			setValues();
+			if (!settings.draw) {
+				drawCircles();
+			}
+
+		});
+
+	}
+
+	function deleteButton() {
+		var div = document.getElementById(settings.idNames.deleteBlock);
+		var e = document.createElement("DIV");
+		e.className = "divSeparator";
+		e.setAttribute("id", settings.idNames.deleteSep);
+		div.appendChild(e);
+		var span = document.createElement("SPAN");
+		span.setAttribute("id", settings.idNames.deleteLine);
+		div.appendChild(span);
+		var b = document.createElement("BUTTON");
+		b.className = "delete";
+		b.setAttribute("id", settings.idNames.delete);
+		span.appendChild(b);
+		e = document.createElement("IMG");
+		e.className = "delete";
+		e.setAttribute("src", "img/delete.png");
+		b.appendChild(e);
+		e = document.createElement("SPAN");
+		e.className = "buttonTextSmall"
+		e.innerHTML = "delete last rotor"
+		e.setAttribute("id", settings.idNames.deleteLabel)
+		b.appendChild(e);
+		b.addEventListener("click", function() {
+			var element = document.getElementById(settings.idNames.item + settings.numRotors);
+			element.parentNode.removeChild(element);
+			if (settings.numRotors === 2) {
+				var element = document.getElementById(settings.idNames.deleteLine);
+				element.parentNode.removeChild(element);
+				var element = document.getElementById(settings.idNames.deleteSep);
+				element.parentNode.removeChild(element);
+			};
+			settings.numRotors--;
+			document.getElementById(settings.idNames.pen).value = document.getElementById(settings.idNames.rotor + settings.numRotors).value;
+			setValues();
+			if (!settings.draw) {
+				drawCircles();
+			}
+			//scroll to the bottom
+			var div = document.getElementById(settings.idNames.rotors);
+			div.scrollTop = div.scrollHeight;
+		});
+
+	}
+
+	function makeButton(id, className, title, text) {
+		var b = document.createElement("BUTTON");
+		if (className) {
+			b.setAttribute("class", className);
+		}
+		if (id) {
+			b.setAttribute("id", id);
+		}
+		if (title) {
+			b.setAttribute("title", title);
+		}
+		if (text) {
+			b.innerHTML = text;
+		}
+		return b;
+	}
+
+	function makeImage(id, className, src) {
+		var i = document.createElement("IMG");
+		if (className) {
+			i.setAttribute("class", className);
+		}
+		if (id) {
+			i.setAttribute("id", id);
+		}
+		if (src) {
+			i.setAttribute("src", src);
+		}
+		return i;
+	}
+
+	function makeSpan(id, className, content) {
+		var s = document.createElement("SPAN");
+		if (className) {
+			s.setAttribute("class", className);
+		}
+		if (content) {
+			s.innerHTML = content;
+		}
+		if (id) {
+			s.setAttribute("id", id);
+		}
+		return s;
+	}
+
+	function drawButton() {
+		var button = makeButton(settings.idNames.draw, "draw", false, "draw");
+		settings.sidebarDiv.appendChild(button);
+		button.addEventListener("click", function() {
+			if (!settings.draw) {
+				if (settings.i === 0) {
+					settings.timer = new Date().getTime() / 1000;
+				}
+				settings.draw = true;
+				button.innerHTML = "pause";
+				setValues();
+				requestAnimationFrame(draw);
+			} else {
+				settings.draw = false;
+				button.innerHTML = "draw";
+			}
+		});
+	}
+
+	function clearButton() {
+		var button = makeButton(settings.idNames.clear, false, "clear drawing", false);
+		var image = makeImage(settings.idNames.clearIcon, "edit", "img/clear.png");
+		button.appendChild(image);
+		settings.sidebarDiv.appendChild(button);
+		button.addEventListener("click", clearCanvas);
+	}
+
+	function restartButton() {
+		var button = makeButton(settings.idNames.restart, false, "reset pen to beginning position", false);
+		var image = makeImage(settings.idNames.clearIcon, "edit", "img/restart.png");
+		button.appendChild(image);
+		settings.sidebarDiv.appendChild(button);
+		button.addEventListener("click", restart);
+	}
+
+	function hideButton() {
+		var button = makeButton(settings.idNames.hide, false, "hide circles", false);
+		var image = makeImage(settings.idNames.hideIcon, "edit", "img/hide.png");
+		button.appendChild(image);
+		settings.sidebarDiv.appendChild(button);
+		button.addEventListener("click", function() {
+			if (settings.circles === "show") {
+				settings.circles = "hide";
+				button.setAttribute("title", "show circles");
+				setValues();
+				drawCircles();
+			} else {
+				settings.circles = "show";
+				button.setAttribute("title", "hide circles");
+				setValues();
+				drawCircles();
+			}
+		});
+	}
+
+	function openImageButton() {
+		var button = makeButton(settings.idNames.open, false, "open drawing in new tab", false);
+		var image = makeImage(settings.idNames.openIcon, "edit", "img/open.png");
+		button.appendChild(image);
+		settings.sidebarDiv.appendChild(button);
+		button.addEventListener("click", function() {
+			var d = settings.canvasPen.toDataURL();
+			window.open(d);
+		});
+	}
+
+	function settingsURLButton() {
+		var button = makeButton(settings.idNames.link, false, "URL for drawing settings", false);
+		var image = makeImage(settings.idNames.linkIcon, "edit", "img/link.png");
+		button.appendChild(image);
+		settings.sidebarDiv.appendChild(button);
+		button.addEventListener("click", function() {
+			window.open(settings.url);
+		});
+	}
+
+	function zoomInButton() {
+		var button = makeButton(settings.idNames.zoomIn, false, "zoom drawing tools in", false);
+		var image = makeImage(settings.idNames.zoomInIcon, "edit", "img/zoomIn.png");
+		button.appendChild(image);
+		settings.sidebarDiv.appendChild(button);
+		button.addEventListener("click", function() {
+			zoom("in");
+		});
+	}
+
+	function zoomOutButton() {
+		var button = makeButton(settings.idNames.zoomOut, false, "zoom drawing tools out", false);
+		var image = makeImage(settings.idNames.zoomOutIcon, "edit", "img/zoomOut.png");
+		button.appendChild(image);
+		settings.sidebarDiv.appendChild(button);
+		button.addEventListener("click", function() {
+			zoom("out");
+		});
+	}
+
+	function rotateButton() {
+		var button = makeButton(settings.idNames.rotate, false, "rotate drawing tools", false);
+		var image = makeImage(settings.idNames.rotateIcon, "edit", "img/rotate.png");
+		button.appendChild(image);
+		settings.sidebarDiv.appendChild(button);
+		button.addEventListener("click", rotateDrawing);
+	}
+
+	function resetButton() {
+		var button = makeButton(settings.idNames.reset, false, "clear zoom and rotation", false);
+		var image = makeImage(settings.idNames.resetIcon, "edit", "img/reset.png");
+		button.appendChild(image);
+		settings.sidebarDiv.appendChild(button);
+		button.addEventListener("click", reset);
+	}
+
+	function gitButton() {
+		var button = makeButton(settings.idNames.git, false, "clear zoom and rotation", false);
+		button.setAttribute("style", "width:100%");
+		var image = makeImage(settings.idNames.gitIcon, "git", "img/gh.png");
+		var span = makeSpan(settings.idNames.gitLabel, "buttonText", "download at github");
+		button.appendChild(image);
+		button.appendChild(span);
+		settings.sidebarDiv.appendChild(button);
+		button.addEventListener("click", function() {
+			window.open("https://github.com/seedcode/SpirographN");
+		});
+	}
+
+	// private functions
 
 	function loadValues(d) {
 
@@ -439,7 +681,7 @@ var sgn = (function(settings) {
 
 		//create delete button if we need and don't have
 		if (settings.numRotors > 1 && document.getElementById(settings.idNames.delete) === null) {
-			addDeleteButton()
+			deleteButton()
 		}
 
 		//write values from inputs to settings
@@ -448,7 +690,7 @@ var sgn = (function(settings) {
 		//if we're not drawing, then we'll show the circles on change
 		if (!settings.draw) {
 			settings.circles = "show";
-			document.getElementById(settings.idNames.hide).innerHTML = "hide circles";
+			document.getElementById(settings.idNames.hide).setAttribute("title", "hide circles");
 		}
 
 		//reset if we're not drawing	
@@ -469,9 +711,11 @@ var sgn = (function(settings) {
 		item.setAttribute("id", settings.idNames.item + num);
 		div.appendChild(item);
 
-		var e = document.createElement("DIV");
-		e.className = "divSeparator";
-		item.appendChild(e);
+		if (num > 1) {
+			var e = document.createElement("DIV");
+			e.className = "divSeparator";
+			item.appendChild(e);
+		}
 
 		var e = document.createElement("SPAN");
 		e.className = "letterLabel";
@@ -529,7 +773,8 @@ var sgn = (function(settings) {
 		settings.curveColor = document.getElementById(settings.idNames.color).value;
 		settings.curveWidth = document.getElementById(settings.idNames.width).value;
 		settings.penRad = [document.getElementById(settings.idNames.pen).value];
-		settings.speed = document.getElementById(settings.idNames.speed).value
+		settings.speed = document.getElementById(settings.idNames.speed).value;
+		settings.iOffset = document.getElementById(settings.idNames.angle).value;
 
 		settings.types = [""];
 		settings.pitches = [1];
@@ -589,24 +834,21 @@ var sgn = (function(settings) {
 			thisEId = settings.idNames.e + c;
 		}
 		settings.numRotors = c - 1;
-		
+
 		//create url string for this config
-		c=0;
+		c = 0;
 		var u = window.location.origin + window.location.pathname;
-		for (c in settings.radii){
-			if(c==0){
-				u+="?st="+settings.radii[c];
-			}
-			else{
-				u+="&r"+c+"="+settings.radii[c]+settings.types[c];
+		for (c in settings.radii) {
+			if (c == 0) {
+				u += "?st=" + settings.radii[c];
+			} else {
+				u += "&r" + c + "=" + settings.radii[c] + settings.types[c];
 			}
 		}
-		u+="&pen="+settings.penRad;
-		u+="&wd="+settings.curveWidth;
-		u+="&cl="+settings.curveColor.substring(1);
-		settings.url=u;
-		document.getElementById(settings.linkId).innerHTML="Settings URL";
-		document.getElementById(settings.linkId).href=u;
+		u += "&pen=" + settings.penRad;
+		u += "&wd=" + settings.curveWidth;
+		u += "&cl=" + settings.curveColor.substring(1);
+		settings.url = u;
 	}
 
 	function drawCanvas() {
@@ -622,13 +864,19 @@ var sgn = (function(settings) {
 
 	function resizeCanvas() {
 
+		var offscreen = 100;
+
 		//capture current draw state and pause drawing.
 		var drawing = settings.draw;
 		settings.draw = false;
 
 		//we need to capture the current drawing and redraw when set
 		var ctx = settings.canvasPen.getContext("2d");
-		var cd = ctx.getImageData(0, 0, settings.canvasCircles.width, settings.canvasCircles.width);
+		var ctxCircles = settings.canvasCircles.getContext("2d");
+		var cd = ctx.getImageData(0, 0, settings.canvasCircles.width, settings.canvasCircles.height);
+
+		ctx.save();
+		ctxCircles.save();
 
 		//fill window
 		settings.windowWidth = window.innerWidth;
@@ -640,28 +888,31 @@ var sgn = (function(settings) {
 		//set sidebar and pad sizes and store in settings
 		settings.divCanvas.setAttribute("style", "width:" + settings.divCanvasWidth + "%;height:" + settings.divCanvasHeight + "px;background:white");
 		settings.sidebarDiv.setAttribute("style", "min-height:" + settings.divCanvasHeight + "px;");
-		settings.left = settings.divCanvas.offsetLeft + settings.sidebarWidth;
-		settings.top = settings.divCanvas.offsetTop;
+		settings.left = settings.divCanvas.offsetLeft + settings.sidebarWidth - offscreen;
+		settings.top = settings.divCanvas.offsetTop - offscreen;
+
+		//set rotor list height
+		var rotors = document.getElementById(settings.idNames.rotors);
+		rotors.setAttribute("style", "max-height:" + settings.divCanvasHeight * .20 + "px;")
 
 		//if we're resizing and we have a previous poisition, then track the offset, so we can redraw our canvases in position
 		//round the coordinates for the center, otherwise the redraws are off.
 		if (settings.a) {
-			settings.offsetL = (Math.round((settings.divCanvas.clientWidth - settings.sidebarWidth) / 2)) - 24 - settings.a;
-			settings.offsetT = Math.round((settings.divCanvasHeight / 2)) - settings.b;
+			settings.offsetL = (Math.round((settings.divCanvas.clientWidth - settings.sidebarWidth) / 2)) + offscreen - settings.a;
+			settings.offsetT = Math.round((settings.divCanvasHeight / 2)) + offscreen - settings.b;
 		}
 
 		//now recenter
-		settings.a = Math.round(((settings.divCanvas.clientWidth - settings.sidebarWidth) / 2)) - 24;
-		settings.b = Math.round((settings.divCanvasHeight / 2));
+		settings.a = Math.round(((settings.divCanvas.clientWidth - settings.sidebarWidth) / 2)) + offscreen;
+		settings.b = Math.round((settings.divCanvasHeight / 2)) + offscreen;
 
 		//resize canvases
-		settings.canvasCircles.height = settings.divCanvasHeight;
-		settings.canvasCircles.width = settings.divCanvas.clientWidth - settings.sidebarWidth;
+		settings.canvasCircles.height = settings.divCanvasHeight + offscreen * 2;
+		settings.canvasCircles.width = settings.divCanvas.clientWidth - settings.sidebarWidth + offscreen * 2;
 		settings.canvasCircles.setAttribute("Style", "left:" + settings.left + "px;top:" + settings.top + "px;position:absolute;z-index:10");
-		settings.canvasPen.height = settings.divCanvasHeight;
-		settings.canvasPen.width = settings.divCanvas.clientWidth - settings.sidebarWidth;
+		settings.canvasPen.height = settings.divCanvasHeight + offscreen * 2;
+		settings.canvasPen.width = settings.divCanvas.clientWidth - settings.sidebarWidth + offscreen * 2;
 		settings.canvasPen.setAttribute("Style", "left:" + settings.left + "px;top:" + settings.top + "px;position:absolute;z-index:20");
-
 
 
 		//update coordinates based on new position
@@ -670,6 +921,21 @@ var sgn = (function(settings) {
 			settings.penStart.y = settings.penStart.y + settings.offsetT;
 			settings.curvePoints[0].x = settings.curvePoints[0].x + settings.offsetL;
 			settings.curvePoints[0].y = settings.curvePoints[0].y + settings.offsetT;
+		}
+
+		//restore rotation
+		if (settings.iPosition != 0) {
+			var posHolder = settings.iPosition;
+			var offSetHolder = settings.iOffset;
+			settings.iOffset = settings.iPosition * -1;
+			rotateDrawing();
+			settings.iOffset = offSetHolder;
+			settings.iPosition = posHolder;
+		}
+
+		//restore Zoom
+		if (settings.zoomStack[0] != 1) {
+			zoomTempRestore();
 		}
 
 		//redraw circles
@@ -865,7 +1131,7 @@ var sgn = (function(settings) {
 			var button = document.getElementById(settings.idNames.draw);
 			settings.draw = false;
 			button.innerHTML = "draw";
-			settings.i = settings.iterator;
+			settings.i = 0;
 			if (settings.circleReset) {
 				settings.circles = "show";
 				settings.circleReset = false;
@@ -899,11 +1165,10 @@ var sgn = (function(settings) {
 		if (settings.speed > 50 && settings.circles === "show") {
 			settings.circles = "hide";
 			settings.circleReset = true;
-		}
-		else if(settings.speed <= 50 && settings.circleReset && settings.circles === "hide"){
+		} else if (settings.speed <= 50 && settings.circleReset && settings.circles === "hide") {
 			//we've slowed down, so we can show again
 			settings.circles = "show";
-			settings.circleReset = false;	
+			settings.circleReset = false;
 		}
 
 		//run circles off for internal loop
@@ -983,8 +1248,6 @@ var sgn = (function(settings) {
 		return (test.value !== "Hello World");
 	}
 
-	//event binding functions
-
 	function inputEvent(inputId, event) {
 		var input = document.getElementById(inputId);
 		input.addEventListener(event, function(event) {
@@ -1010,173 +1273,183 @@ var sgn = (function(settings) {
 		});
 	}
 
-	function drawButton(buttonId) {
-		var button = document.getElementById(buttonId);
-		button.addEventListener("click", function() {
-			if (!settings.draw) {
-				if (settings.i === 0) {
-					settings.timer = new Date().getTime() / 1000;
-				}
-				settings.draw = true;
-				button.innerHTML = "pause";
-				setValues();
-				requestAnimationFrame(draw);
-			} else {
-				settings.draw = false;
-				button.innerHTML = "draw";
-			}
-		});
+	function clearCanvas() {
+		//if we're zoomed out then clear the zoom to clear bigger drawings
+		if (settings.zoomStack[0] < 1) {
+			zoomTempClear()
+			var z = true;
+		}
+
+		//clear
+		var ctx = settings.canvasPen.getContext("2d");
+		ctx.clearRect(0, 0, settings.canvasPen.width, settings.canvasPen.height);
+
+		//restore Zoom
+		if (z) {
+			zoomTempRestore()
+		}
+		settings.drawing = false;
 	}
 
-	function hideButton(buttonId) {
-		var button = document.getElementById(buttonId);
-		button.addEventListener("click", function() {
-			if (settings.circles === "show") {
-				settings.circles = "hide";
-				button.innerHTML = "show circles";
-				setValues();
-				drawCircles();
-			} else {
-				settings.circles = "show";
-				button.innerHTML = "hide circles";
-				setValues();
-				drawCircles();
-			}
-		});
-	}
-
-	function clearButton(buttonId) {
-		var button = document.getElementById(buttonId);
-		button.addEventListener("click", function() {
-			var ctx = settings.canvasPen.getContext("2d");
-			ctx.clearRect(0, 0, settings.canvasPen.width, settings.canvasPen.height);
-			settings.drawing = false;
-		});
-	}
-
-	function resetButton(buttonId) {
-		var button = document.getElementById(buttonId);
-		button.addEventListener("click", reset);
-	}
-
-	function deleteButton(buttonId) {
-		var button = document.getElementById(buttonId);
-		button.addEventListener("click", function() {
-			var element = document.getElementById(settings.idNames.item + settings.numRotors);
-			element.parentNode.removeChild(element);
-			if (settings.numRotors === 2) {
-				var element = document.getElementById(settings.idNames.deleteLine);
-				element.parentNode.removeChild(element);
-				var element = document.getElementById(settings.idNames.deleteSep);
-				element.parentNode.removeChild(element);
-			};
-			settings.numRotors--;
-			document.getElementById(settings.idNames.pen).value = document.getElementById(settings.idNames.rotor + settings.numRotors).value;
-			setValues();
-			if (!settings.draw) {
-				drawCircles();
-			}
-			//scroll to the bottom
-			var div = document.getElementById(settings.idNames.rotors);
-			div.scrollTop = div.scrollHeight;
-		});
-	}
-
-	function addButton(buttonId) {
-		var button = document.getElementById(buttonId);
-		button.addEventListener("click", function() {
-
-			//get current last rotor radius
-			var newRad = document.getElementById(settings.idNames.rotor + settings.numRotors).value / 2;
-
-			//toggle types
-			if (document.getElementById(settings.idNames.e + settings.numRotors).checked) {
-				var type = "h";
-			} else {
-				var type = "e";
-			}
-
-			settings.numRotors++;
-
-			addRotor(settings.numRotors, newRad, type);
-
-			//update pen radius
-			document.getElementById(settings.idNames.pen).value = newRad;
-
-			//if this is the second rotor we need our delete button.
-			if (settings.numRotors === 2) {
-				addDeleteButton();
-			}
-
-			//scroll to the bottom
-			document.getElementById(settings.idNames.rotors).scrollTop = document.getElementById(settings.idNames.rotors).scrollHeight;
-
-			setValues();
-			if (!settings.draw) {
-				drawCircles();
-			}
-
-		});
-	}
-
-	function addDeleteButton() {
-		var div = document.getElementById(settings.idNames.deleteBlock);
-		var e = document.createElement("DIV");
-		e.className = "divSeparator";
-		e.setAttribute("id", settings.idNames.deleteSep);
-		div.appendChild(e);
-
-		var span = document.createElement("SPAN");
-		span.setAttribute("id", settings.idNames.deleteLine);
-		div.appendChild(span);
-		var b = document.createElement("BUTTON");
-		b.className = "delete";
-		b.setAttribute("id", settings.idNames.delete);
-		span.appendChild(b);
-		deleteButton(settings.idNames.delete);
-
-		e = document.createElement("IMG");
-		e.className = "delete";
-		e.setAttribute("src", "img/delete.png");
-
-		b.appendChild(e);
-
-		e = document.createElement("SPAN");
-		e.className = "deleteLabel"
-		e.innerHTML = "delete last rotor"
-		e.setAttribute("id", settings.idNames.deleteLabel)
-		span.appendChild(e);
-		deleteButton(settings.idNames.deleteLabel);
-	}
-
-	function reset() {
+	function restart() {
 		settings.i = 0;
 		setValues();
 		drawCircles();
 	}
+
+	function reset() {
+		if (settings.iPosition !== 0) {
+			//set rotation position to 0
+			var temp = settings.iOffset;
+			settings.iOffset = settings.iPosition;
+			rotateDrawing();
+			settings.iOffset = temp;
+			settings.iPosition = 0;
+		}
+		//reset zoom
+		if (settings.zoomStack[0] !== 1) {
+			while (settings.zoomStack[0] !== 1) {
+				performZoom(1 / settings.zoomStack.shift(), true);
+			}
+		}
+		drawCircles();
+	}
+
+	function rotateDrawing() {
+
+		var degrees = settings.iOffset * -1;
+		settings.iPosition += degrees;
+
+		var ctx = settings.canvasCircles.getContext("2d");
+		var ctxPen = settings.canvasPen.getContext("2d");
+
+		//angle from center to upper left, we're going to translate this point
+		var ang = ((Math.PI / 180) * 180) - Math.atan((settings.canvasPen.clientHeight / 2) / (settings.canvasPen.clientWidth / 2));
+
+		var ang = ang - (degrees * (Math.PI / 180));
+
+		var hyp = Math.sqrt(Math.pow(settings.canvasPen.clientHeight / 2, 2) + Math.pow(settings.canvasPen.clientWidth / 2, 2));
+
+		var pt = circlePoint(settings.a, settings.b, hyp, ang / (Math.PI / 180));
+
+		//rotate pen Canvas
+		//ctxPen.save();
+		ctxPen.translate(pt.x, pt.y);
+		ctxPen.rotate(degrees * (Math.PI / 180));
+
+		ctx.translate(pt.x, pt.y);
+		ctx.rotate(degrees * (Math.PI / 180));
+
+		//draw image from circles and restore
+		//ctxPen.drawImage(settings.canvasCircles,0, 0);
+		//ctxPen.restore();
+
+		drawCircles();
+
+	}
+
+	function zoom(inOut) {
+
+		if (inOut === "in") {
+			settings.currentZoom = 1 + settings.zoom;
+		} else if (inOut === "out") {
+			settings.currentZoom = 1 - settings.zoom;
+		}
+
+		var restore;
+		var ztu;
+
+		//update stack if moving forward
+		if (settings.zoomStack[0] < 1 && settings.currentZoom > 1 || settings.zoomStack[0] > 1 && settings.currentZoom < 1) {
+			//we're changing directions so restore to last zoom
+			restore = settings.zoomStack.shift();
+		} else {
+			settings.zoomStack.unshift(settings.currentZoom);
+		}
+
+		if (restore) {
+			ztu = 1 / restore;
+		} else {
+			ztu = settings.currentZoom;
+		}
+
+		performZoom(ztu);
+
+		drawCircles();
+
+	}
+
+	function zoomTempClear() {
+		//back zoom out to 1
+		//does not redraw circles
+		var zoomStackTemp = JSON.parse(JSON.stringify(settings.zoomStack));
+		while (zoomStackTemp[0] !== 1) {
+			performZoom(1 / zoomStackTemp.shift(), true);
+		}
+	}
+
+	function zoomTempRestore() {
+		//we're zoomed, we need to run stack from the bottom
+		//preserve stack as running zoom affects it.
+		var zoomHolder = settings.currentZoom;
+		var lgth = settings.zoomStack.length;
+		var c = lgth - 2;
+		while (c > -1) {
+			performZoom(settings.zoomStack[c], true);
+			c--;
+		}
+		drawCircles();
+	}
+
+	function performZoom(ztu, restore) {
+
+		if (restore) {
+			ztu = ztu / 1;
+		}
+
+		var ctx = settings.canvasCircles.getContext("2d");
+		var ctxPen = settings.canvasPen.getContext("2d");
+
+		//we don't want to reposition when we zoom, so we need to off set our origin.
+		var x = (settings.canvasPen.clientWidth / ztu - settings.canvasPen.clientWidth) / 2;
+		var y = (settings.canvasPen.clientHeight / ztu - settings.canvasPen.clientHeight) / 2;
+
+		//scale
+		ctx.scale(ztu, ztu);
+		ctxPen.scale(ztu, ztu);
+
+		//reset origin
+		ctx.translate(x, y);
+		ctxPen.translate(x, y);
+	}
+
 
 })(
 	//settings object
 	{
 		"draw": false,
 		"i": 0,
-		"iOffset": -90,
+		"iOffset": 90,
+		"iPosition": 0,
 		"iterator": .25,
+		"zoom": .25,
+		"zoomStack": [1],
+		"currentZoom": 1,
 		"curvePoints": [],
+		"url": "#",
 		"circles": "show",
 		"circleColor": "LightGrey",
 		"circleStroke": 3,
 		"circleReset": false,
 		"offsetT": 0,
 		"offsetL": 0,
-		"directions": [1],
 		"penStart": {
 			"x": 0,
 			"y": 0
 		},
 		"drawing": false,
 		"idNames": {
-			"linkId":"linkId",
+			"linkId": "linkId",
 			"sidebar": "sidebar",
 			"pad": "pad",
 			"stator": "stator",
@@ -1197,8 +1470,17 @@ var sgn = (function(settings) {
 			"addLabel": "addLabel",
 			"draw": "draw",
 			"clear": "clear",
+			"clearLabel": "clearLabel",
+			"clearIcon": "clearIcon",
 			"reset": "reset",
+			"resetLabel": "resetLabel",
+			"resetIcon": "resetIcon",
+			"restart": "restart",
+			"restartLabel": "restartLabel",
+			"restartIcon": "restartIcon",
 			"hide": "hide",
+			"hideLabel": "hideLabel",
+			"hideIcon": "hideIcon",
 			"preset": "preset",
 			"canvasCircles": "canvasCircles",
 			"canvasPen": "canvasPen",
@@ -1207,6 +1489,25 @@ var sgn = (function(settings) {
 			"deleteBlock": "deleteBlock",
 			"download": "download",
 			"presets": "presets",
+			"rotate": "rotate",
+			"rotateLabel": "rotateLabel",
+			"rotateIcon": "rotateIcon",
+			"open": "open",
+			"openLabel": "openLabel",
+			"openIcon": "openIcon",
+			"git": "git",
+			"gitLabel": "gitLabel",
+			"gitIcon": "gitIcon",
+			"link": "link",
+			"linkLabel": "linkLabel",
+			"linkIcon": "linkIcon",
+			"zoomIn": "zoomIn",
+			"zoomInLabel": "zoomInLabel",
+			"zoomInIcon": "zoomInIcon",
+			"zoomOut": "zoomOut",
+			"zoomOutLabel": "zoomOutnLabel",
+			"zoomOutIcon": "zoomOutnIcon",
+			"angle": "angle",
 		},
 		"presets": [
 
@@ -1513,7 +1814,7 @@ var sgn = (function(settings) {
 			"speed": 10,
 		}, {
 			"name": "faster",
-			"speed": 100,
+			"speed": 200,
 		}, {
 			"name": "fastest",
 			"speed": 1000,
