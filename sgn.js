@@ -933,11 +933,6 @@ var sgn = (function(settings) {
 			settings.iPosition = posHolder;
 		}
 
-		//restore Zoom
-		if (settings.zoomStack[0] != 1) {
-			zoomTempRestore();
-		}
-
 		//redraw circles
 		if (!settings.draw) {
 			drawCircles();
@@ -976,6 +971,9 @@ var sgn = (function(settings) {
 		var prevSpinPitch = 0;
 		var prevDrawPitch = 0;
 		var pen;
+		
+		
+		var zoom = settings.currentZoom;
 
 		//clear circles canvas
 		var ctx = settings.canvasCircles.getContext("2d");
@@ -983,7 +981,7 @@ var sgn = (function(settings) {
 
 		//draw Stator
 		if (settings.circles === "show") {
-			drawOneCircle(settings.canvasCircles, settings.a, settings.b, settings.radii[0]);
+			drawOneCircle(settings.canvasCircles, settings.a, settings.b, settings.radii[0] * zoom );
 		}
 
 		//start at the center
@@ -995,9 +993,11 @@ var sgn = (function(settings) {
 		c = 1;
 		//draw rotor Circles
 		while (c < (settings.radii.length)) {
-
-			thisRad = Number(settings.radii[c]);
-			prevRad = Number(settings.radii[c - 1]);
+      
+			
+			//set radii, applying zoom
+			thisRad = Number(settings.radii[c]) * zoom;
+			prevRad = Number(settings.radii[c - 1]) * zoom;
 			if (settings.types[c] === "h") {
 				//hypitrochoid: circle inside
 				centerRad = prevRad - thisRad;
@@ -1057,7 +1057,7 @@ var sgn = (function(settings) {
 
 		//draw Pen
 		//pen pitch set in last circle iteration
-		var penPt = circlePoint(pt.x, pt.y, settings.penRad, i * penPitch);
+		var penPt = circlePoint(pt.x, pt.y, settings.penRad * zoom, i * penPitch);
 
 		//mark our starting point
 		if (settings.i === 0) {
@@ -1307,11 +1307,8 @@ var sgn = (function(settings) {
 			settings.iPosition = 0;
 		}
 		//reset zoom
-		if (settings.zoomStack[0] !== 1) {
-			while (settings.zoomStack[0] !== 1) {
-				performZoom(1 / settings.zoomStack.shift(), true);
-			}
-		}
+    settings.zoomStack = [1];
+		settings.currentZoom = 1;
 		drawCircles();
 	}
 
@@ -1349,6 +1346,36 @@ var sgn = (function(settings) {
 	}
 
 	function zoom(inOut) {
+		
+		if(settings.zoomStack.length>1 && inOut==="in" && settings.zoomStack[0]<1) {
+			//we're changing directions from going out to in
+			var removed = settings.zoomStack.shift();
+		}
+		else if(settings.zoomStack.length>1 && inOut==="out" && settings.zoomStack[0]>1) {
+			//we're changing directions from going in to out
+			var removed = settings.zoomStack.shift();
+		}
+		else if (inOut === "in"){
+			//same direction or first move
+			settings.zoomStack.unshift(1 + settings.zoom);
+			
+		}
+		else if (inOut === "out"){
+			//same direction or first move
+			settings.zoomStack.unshift( 1 - settings.zoom);
+		}
+		else{
+			return;
+		}
+		
+	  settings.currentZoom = Math.pow(settings.zoomStack[0],settings.zoomStack.length-1);
+		
+		drawCircles();
+		
+		
+		/*
+		
+		
 
 		if (inOut === "in") {
 			settings.currentZoom = 1 + settings.zoom;
@@ -1372,55 +1399,16 @@ var sgn = (function(settings) {
 		} else {
 			ztu = settings.currentZoom;
 		}
+		
+		*/
+		
+		//clear circles canvas
+		//var ctx = settings.canvasCircles.getContext("2d");
+		//ctx.clearRect(0, 0, settings.canvasCircles.width, settings.canvasCircles.height);
 
-		performZoom(ztu);
 
-		drawCircles();
+		//performZoom(ztu);
 
-	}
-
-	function zoomTempClear() {
-		//back zoom out to 1
-		//does not redraw circles
-		var zoomStackTemp = JSON.parse(JSON.stringify(settings.zoomStack));
-		while (zoomStackTemp[0] !== 1) {
-			performZoom(1 / zoomStackTemp.shift(), true);
-		}
-	}
-
-	function zoomTempRestore() {
-		//we're zoomed, we need to run stack from the bottom
-		//preserve stack as running zoom affects it.
-		var zoomHolder = settings.currentZoom;
-		var lgth = settings.zoomStack.length;
-		var c = lgth - 2;
-		while (c > -1) {
-			performZoom(settings.zoomStack[c], true);
-			c--;
-		}
-		drawCircles();
-	}
-
-	function performZoom(ztu, restore) {
-
-		if (restore) {
-			ztu = ztu / 1;
-		}
-
-		var ctx = settings.canvasCircles.getContext("2d");
-		var ctxPen = settings.canvasPen.getContext("2d");
-
-		//we don't want to reposition when we zoom, so we need to off set our origin.
-		var x = (settings.canvasPen.clientWidth / ztu - settings.canvasPen.clientWidth) / 2;
-		var y = (settings.canvasPen.clientHeight / ztu - settings.canvasPen.clientHeight) / 2;
-
-		//scale
-		ctx.scale(ztu, ztu);
-		ctxPen.scale(ztu, ztu);
-
-		//reset origin
-		ctx.translate(x, y);
-		ctxPen.translate(x, y);
 	}
 
 
