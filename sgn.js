@@ -235,7 +235,7 @@ var sgn = (function(settings) {
 		settings.sidebarDiv.appendChild(e);
 
 		if (colorInputOK()) {
-			//load color input 
+			//load color input
 			e = document.createElement("INPUT");
 			e.className = "color";
 			e.setAttribute("type", "color");
@@ -338,7 +338,7 @@ var sgn = (function(settings) {
 		settings.sidebarDiv.appendChild(e);
 
 
-		//load canvas		
+		//load canvas
 		setValues();
 
 		//add canvas
@@ -641,7 +641,7 @@ var sgn = (function(settings) {
 
 	function loadValues(d) {
 
-		//set values from d. d is either a loaded preset or created from the url		
+		//set values from d. d is either a loaded preset or created from the url
 		document.getElementById(settings.idNames.stator).value = d.st;
 		document.getElementById(settings.idNames.pen).value = d.pen;
 		document.getElementById(settings.idNames.width).value = d.wd;
@@ -693,7 +693,7 @@ var sgn = (function(settings) {
 			document.getElementById(settings.idNames.hide).setAttribute("title", "hide circles");
 		}
 
-		//reset if we're not drawing	
+		//reset if we're not drawing
 		if (!settings.draw) {
 			reset();
 			drawCircles();
@@ -731,7 +731,7 @@ var sgn = (function(settings) {
 		item.appendChild(e);
 		inputEvent(settings.idNames.rotor + num, "input");
 
-		//type					
+		//type
 		e = document.createElement("INPUT");
 		e.setAttribute("type", "radio");
 		e.setAttribute("class", "radio");
@@ -971,8 +971,8 @@ var sgn = (function(settings) {
 		var prevSpinPitch = 0;
 		var prevDrawPitch = 0;
 		var pen;
-		
-		
+
+
 		var zoom = settings.currentZoom;
 
 		//clear circles canvas
@@ -993,8 +993,8 @@ var sgn = (function(settings) {
 		c = 1;
 		//draw rotor Circles
 		while (c < (settings.radii.length)) {
-      
-			
+
+
 			//set radii, applying zoom
 			thisRad = Number(settings.radii[c]) * zoom;
 			prevRad = Number(settings.radii[c - 1]) * zoom;
@@ -1250,11 +1250,19 @@ var sgn = (function(settings) {
 
 	function inputEvent(inputId, event) {
 		var input = document.getElementById(inputId);
-		input.addEventListener(event, function(event) {
+		input.addEventListener(event, function(e) {
 			setValues();
 			if (!settings.draw) {
 				drawCircles();
 			}
+		});
+		input.addEventListener('keydown',function(e){
+			if(e.code==='Minus'){
+				e.preventDefault();
+			}
+		});
+		input.addEventListener('paste',function(e){
+			e.preventDefault();
 		});
 	}
 
@@ -1346,7 +1354,7 @@ var sgn = (function(settings) {
 	}
 
 	function zoom(inOut) {
-		
+
 		if(settings.zoomStack.length>1 && inOut==="in" && settings.zoomStack[0]<1) {
 			//we're changing directions from going out to in
 			var removed = settings.zoomStack.shift();
@@ -1358,7 +1366,7 @@ var sgn = (function(settings) {
 		else if (inOut === "in"){
 			//same direction or first move
 			settings.zoomStack.unshift(1 + settings.zoom);
-			
+
 		}
 		else if (inOut === "out"){
 			//same direction or first move
@@ -1367,15 +1375,15 @@ var sgn = (function(settings) {
 		else{
 			return;
 		}
-		
+
 	  settings.currentZoom = Math.pow(settings.zoomStack[0],settings.zoomStack.length-1);
-		
+
 		drawCircles();
-		
-		
+
+
 		/*
-		
-		
+
+
 
 		if (inOut === "in") {
 			settings.currentZoom = 1 + settings.zoom;
@@ -1399,9 +1407,9 @@ var sgn = (function(settings) {
 		} else {
 			ztu = settings.currentZoom;
 		}
-		
+
 		*/
-		
+
 		//clear circles canvas
 		//var ctx = settings.canvasCircles.getContext("2d");
 		//ctx.clearRect(0, 0, settings.canvasCircles.width, settings.canvasCircles.height);
