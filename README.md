@@ -7,11 +7,11 @@ A Javascript drawing app, using canvas, where you can add/nest *n* number of gea
 
 Unfortunately, the canvas line rendering on Safari is not precise enough to get all the details in the more complex shapes. Chrome gives the best results.
 
-##Spirograph&#8319; in action
+# Spirograph&#8319; in action
 
 [![truelove](img/drawing.png)](img/drawing.png)
 
-#Sample Drawings Created with Spirograph&#8319;
+# Sample Drawings Created with Spirograph&#8319;
 
 [![truelove](img/truelove.png)](img/truelove.png)
 [http://seedcode.com/SpirographN/sgn.html?pre=true%20love](http://seedcode.com/SpirographN/sgn.html?pre=true%20love)
@@ -28,6 +28,3 @@ Unfortunately, the canvas line rendering on Safari is not precise enough to get 
 [![truelove](img/darkknight.png)](img/darkknight.png)
 [http://seedcode.com/SpirographN/sgn.html?pre=dark%20knight](http://seedcode.com/SpirographN/sgn.html?pre=dark%20knight)
 
-##Developed By Dr. S
-
-[![DR.S](https://img.youtube.com/vi/-IYaftepO-s/0.jpg)](https://youtu.be/-IYaftepO-s)
