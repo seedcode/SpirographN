@@ -11,7 +11,7 @@ Unfortunately, the canvas line rendering on Safari is not precise enough to get 
 
 [![truelove](img/drawing.png)](img/drawing.png)
 
-##Sample Drawings Created with Spirograph&#8319;
+#Sample Drawings Created with Spirograph&#8319;
 
 [![truelove](img/truelove.png)](img/truelove.png)
 [http://seedcode.com/SpirographN/sgn.html?pre=true%20love](http://seedcode.com/SpirographN/sgn.html?pre=true%20love)
