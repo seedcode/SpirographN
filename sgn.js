@@ -1110,7 +1110,8 @@ var sgn = (function(settings) {
 		var ctx = settings.canvasPen.getContext("2d");
 		ctx.beginPath();
 		ctx.strokeStyle = settings.curveColor;
-		ctx.lineWidth = settings.curveWidth;
+		//seems like a bug in chrome that doesn't like .01 pen width. Adding a tiny bit fixes for some reason.
+		ctx.lineWidth = parseFloat(settings.curveWidth) + 0.001;
 		ctx.moveTo(settings.curvePoints[0].x, settings.curvePoints[0].y);
 		ctx.lineTo(settings.curvePoints[1].x, settings.curvePoints[1].y);
 		ctx.stroke();
