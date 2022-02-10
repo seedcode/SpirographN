@@ -578,7 +578,7 @@ var sgn = (function(settings) {
 			var img = newTab.document.createElement('img');
 			img.src = d;
 			var title = newTab.document.createElement('title');
-			title.innerHTML = 'Spirographⁿ Image';
+			title.innerHTML = 'Spirograph&#8319; Image';
 			newTab.document.head.appendChild(title);
 			newTab.document.body.appendChild(img);
 		});
