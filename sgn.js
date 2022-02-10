@@ -574,7 +574,13 @@ var sgn = (function(settings) {
 		settings.sidebarDiv.appendChild(button);
 		button.addEventListener("click", function() {
 			var d = settings.canvasPen.toDataURL();
-			window.open(d);
+			var newTab = window.open();
+			var img = newTab.document.createElement('img');
+			img.src = d;
+			var title = newTab.document.createElement('title');
+			title.innerHTML = 'Spirographⁿ Image';
+			newTab.document.head.appendChild(title);
+			newTab.document.body.appendChild(img);
 		});
 	}
 
