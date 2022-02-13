@@ -350,6 +350,9 @@ var sgn = (function(settings) {
 		window.onresize = function(e) {
 			resizeCanvas(e);
 		};
+
+		var rotorsDiv = document.getElementById('rotors');
+		rotorsDiv.style.height = (settings.numRotors * 27) + (settings.numRotors * 4.3 )   + 'px';
 	}
 
 	function spot(d) {
@@ -411,6 +414,9 @@ var sgn = (function(settings) {
 				deleteButton();
 			}
 
+			var rotorsDiv = document.getElementById('rotors');
+			rotorsDiv.style.height = (settings.numRotors * 27) + (settings.numRotors * 4.3 )   + 'px';
+
 			//scroll to the bottom
 			document.getElementById(settings.idNames.rotors).scrollTop = document.getElementById(settings.idNames.rotors).scrollHeight;
 
@@ -460,6 +466,11 @@ var sgn = (function(settings) {
 			if (!settings.draw) {
 				drawCircles();
 			}
+
+
+			var rotorsDiv = document.getElementById('rotors');
+			rotorsDiv.style.height = (settings.numRotors * 27) + (settings.numRotors * 4.3 )   + 'px';
+
 			//scroll to the bottom
 			var div = document.getElementById(settings.idNames.rotors);
 			div.scrollTop = div.scrollHeight;
@@ -899,7 +910,7 @@ var sgn = (function(settings) {
 
 		//set rotor list height
 		var rotors = document.getElementById(settings.idNames.rotors);
-		rotors.setAttribute("style", "max-height:" + settings.divCanvasHeight * .20 + "px;")
+		rotors.setAttribute("style", "max-height:" + settings.divCanvasHeight * .23 + "px;");
 
 		//if we're resizing and we have a previous poisition, then track the offset, so we can redraw our canvases in position
 		//round the coordinates for the center, otherwise the redraws are off.
@@ -1513,156 +1524,14 @@ var sgn = (function(settings) {
 			"angle": "angle",
 		},
 		"presets": [
-
+			
 			{
-				"name": "alien artifact",
-				"st": "250",
-				"r1": "125h",
-				"r2": "66h",
-				"r3": "33e",
-				"r4": "11e",
-				"r5": "22e",
-				"pen": "5.5",
-				"wd": ".2",
-				"cl": "#4B0082",
-				"sp": "1",
-			},
-
-			{
-				"name": "benoit",
-				"st": "250",
-				"r1": "132h",
-				"r2": "11e",
-				"r3": "33e",
-				"r4": "44h",
-				"pen": "11",
-				"wd": ".07",
-				"cl": "#000000",
-				"sp": "1",
-			},
-
-			{
-				"name": "burgess shale",
-				"st": "250",
-				"r1": "99h",
-				"r2": "75h",
-				"r3": "50e",
-				"r4": "25e",
-				"pen": "25",
-				"wd": ".01",
-				"cl": "#6A5ACD",
-				"sp": "1000",
-			},
-
-			{
-				"name": "cathederal",
-				"st": "250",
-				"r1": "132h",
-				"r2": "11e",
-				"pen": "11",
-				"wd": ".2",
-				"cl": "#000080",
-				"sp": "1",
-			},
-
-			{
-				"name": "chrysanthemum",
-				"st": "200",
-				"r1": "66h",
-				"r2": "72e",
-				"pen": "36",
-				"wd": ".1",
-				"cl": "#FF00FF",
-				"sp": "1",
-			},
-
-			{
-				"name": "classic plus",
-				"st": "77",
-				"r1": "11e",
-				"r2": "72e",
-				"pen": "72",
-				"wd": ".1",
-				"cl": "#2E8B57",
-				"sp": "1",
-			},
-
-			{
-				"name": "dark knight",
-				"st": "31",
-				"r1": "77e",
-				"r2": "66e",
-				"r3": "33e",
-				"r4": "16.5e",
-				"pen": "16.5",
-				"wd": ".08",
-				"cl": "#000000",
-				"sp": "1",
-			},
-
-			{
-				"name": "electric blue",
-				"st": "140",
-				"r1": "105e",
-				"r2": "70h",
-				"r3": "22h",
-				"pen": "11",
-				"wd": ".1",
-				"cl": "#0000FF",
-				"sp": "1",
-			},
-
-
-			{
-				"name": "habitrail",
-				"st": "300",
-				"r1": "150h",
-				"r2": "125h",
-				"r3": "54h",
-				"pen": "13.5",
-				"wd": ".08",
-				"cl": "#000000",
-				"sp": "1",
-			},
-
-
-			{
-				"name": "kaleidoscope",
-				"st": "250",
-				"r1": "12.5h",
-				"r2": "72e",
-				"pen": "36",
-				"wd": ".05",
-				"cl": "#4B0082",
-				"sp": "1",
-			}, {
-				"name": "lily pad",
-				"st": "250",
-				"r1": "25h",
-				"r2": "66e",
-				"r3": "33e",
-				"pen": "33",
-				"wd": ".1",
-				"cl": "#8FBC8F",
-				"sp": "1",
-			}, {
 				"name": "liner",
 				"st": "300",
 				"r1": "150h",
 				"pen": "150",
 				"wd": "1",
 				"cl": "#008000",
-				"sp": "1",
-			},
-
-			{
-				"name": "mandala",
-				"st": "100",
-				"r1": "4e",
-				"r2": "100e",
-				"pen": "50",
-				"wd": ".08",
-				"cl": "#FF00FF",
 				"sp": "1",
 			},
 
@@ -1680,13 +1549,60 @@ var sgn = (function(settings) {
 			},
 
 			{
-				"name": "maya code",
-				"st": "200",
-				"r1": "66h",
+				"name": "classic plus",
+				"st": "77",
+				"r1": "11e",
 				"r2": "72e",
 				"pen": "72",
 				"wd": ".1",
-				"cl": "#800080",
+				"cl": "#2E8B57",
+				"sp": "1",
+			},
+
+			{
+				"name": "lily pad",
+				"st": "250",
+				"r1": "25h",
+				"r2": "66e",
+				"r3": "33e",
+				"pen": "33",
+				"wd": ".2",
+				"cl": "#8FBC8F",
+				"sp": "1",
+			}, 
+
+			{
+				"name": "kaleidoscope",
+				"st": "250",
+				"r1": "12.5h",
+				"r2": "72e",
+				"pen": "36",
+				"wd": ".05",
+				"cl": "#4B0082",
+				"sp": "1",
+			}, 
+
+			{
+				"name": "tubular",
+				"st": "120",
+				"r1": "60e",
+				"r2": "120h",
+				"r3": "22h",
+				"pen": "5.5",
+				"wd": ".1",
+				"cl": "#006400",
+				"sp": "1",
+			},
+
+			{
+				"name": "habitrail",
+				"st": "300",
+				"r1": "150h",
+				"r2": "125h",
+				"r3": "54h",
+				"pen": "13.5",
+				"wd": ".08",
+				"cl": "#000000",
 				"sp": "1",
 			},
 
@@ -1698,6 +1614,220 @@ var sgn = (function(settings) {
 				"pen": "66",
 				"wd": ".2",
 				"cl": "#000080",
+				"sp": "1",
+			},
+
+			{
+				"name": "emerald",
+				"st": "150",
+				"r1": "4e",
+				"r2": "75e",
+				"r3": "25h",
+				"pen": "75",
+				"wd": ".04",
+				"cl": "#007071",
+				"sp": "1000",
+			},
+
+			{
+				"name": "points",
+				"st": "75",
+				"r1": "205h",
+				"r2": "152e",
+				"r3": "76h",
+				"pen": "76",
+				"wd": ".02",
+				"cl": "#0000ff",
+				"sp": "10",
+			},
+
+			{
+				"name": "the touch",
+				"st": "6.25",
+				"r1": "198e",
+				"r2": "99h",
+				"r3": "9e",
+				"pen": "9",
+				"wd": ".03",
+				"cl": "#800080",
+				"sp": "1000",
+			},
+
+			{
+				"name": "red cloud",
+				"st": "332",
+				"r1": "207.5h",
+				"r2": "20.75h",
+				"r3": "77h",
+				"pen": "77",
+				"wd": ".02",
+				"cl": "#ed0707",
+				"sp": "1000",
+			},
+
+
+			{
+				"name": "wormhole",
+				"st": "25",
+				"r1": "198h",
+				"r2": "66h",
+				"r3": "5.5e",
+				"pen": "5.5",
+				"wd": ".2",
+				"cl": "#942193",
+				"sp": "1",
+			},
+
+			{
+				"name": "sails",
+				"st": "250",
+				"r1": "25h",
+				"r2": "66h",
+				"r3": "5.5h",
+				"pen": "66",
+				"wd": ".1",
+				"cl": "#ff2600",
+				"sp": "1",
+			},
+
+			{
+				"name": "ouroboros",
+				"st": "332",
+				"r1": "166h",
+				"r2": "20.75h",
+				"r3": "77h",
+				"pen": "77",
+				"wd": ".1",
+				"cl": "#008000",
+				"sp": "1",
+			},
+
+			{
+				"name": "true love",
+				"st": "250",
+				"r1": "99h",
+				"r2": "66e",
+				"r3": "22h",
+				"pen": "33",
+				"wd": ".2",
+				"cl": "#8B0000",
+				"sp": "1",
+			},
+
+			{
+				"name": "the bug",
+				"st": "150",
+				"r1": "90e",
+				"r2": "45e",
+				"r3": "22.5e",
+				"r4": "17e",
+				"r5": "22.5e",
+				"pen": "22.5",
+				"wd": ".02",
+				"cl": "#945200",
+				"sp": "1000",
+			},
+
+			{
+				"name": "ribbons",
+				"st": "332",
+				"r1": "207.5h",
+				"r2": "20.75h",
+				"r3": "38.5e",
+				"r4": "19.25h",
+				"pen": "19.25",
+				"wd": ".04",
+				"cl": "#0000ff",
+				"sp": "1000",
+			},
+
+			{
+				"name": "burgess shale",
+				"st": "250",
+				"r1": "99h",
+				"r2": "75h",
+				"r3": "50e",
+				"r4": "25e",
+				"pen": "25",
+				"wd": ".01",
+				"cl": "#6A5ACD",
+				"sp": "1000",
+			},
+			
+			{
+				"name": "amethyst",
+				"st": "350",
+				"r1": "187h",
+				"r2": "66h",
+				"r3": "33e",
+				"r4": "11h",
+				"pen": "5.5",
+				"wd": ".05",
+				"cl": "#4b0082",
+				"sp": "1000",
+			},
+
+			{
+				"name": "magnets",
+				"st": "9",
+				"r1": "250e",
+				"r2": "180h",
+				"r3": "90e",
+				"pen": "90",
+				"wd": ".05",
+				"cl": "#7f7f7f",
+				"sp": "1000",
+			},
+
+			{
+				"name": "super star",
+				"st": "250",
+				"r1": "90h",
+				"r2": "45e",
+				"r3": "45e",
+				"r4": "22.5h",
+				"r5": "17h",
+				"pen": "17",
+				"wd": ".03",
+				"cl": "#011993",
+				"sp": "1000",
+			},
+
+			{
+				"name": "prince",
+				"st": "12.5",
+				"r1": "198e",
+				"r2": "66h",
+				"r3": "11h",
+				"r4": "5.5e",
+				"pen": "33",
+				"wd": ".1",
+				"cl": "#942193",
+				"sp": "1",
+			},
+
+			{
+				"name": "art deco",
+				"st": "75",
+				"r1": "25e",
+				"r2": "50e",
+				"r3": "100e",
+				"r4": "199h",
+				"r5": "99.5h",
+				"pen": "99.5",
+				"wd": ".05",
+				"cl": "#033333",
+				"sp": "1",
+			},
+
+			{
+				"name": "mandala",
+				"st": "75",
+				"r1": "160e",
+				"r2": "3h",
+				"pen": "48",
+				"wd": ".1",
+				"cl": "#007071",
 				"sp": "1",
 			},
 
@@ -1716,28 +1846,18 @@ var sgn = (function(settings) {
 			},
 
 			{
-				"name": "true love",
-				"st": "250",
-				"r1": "99h",
-				"r2": "66e",
-				"r3": "22h",
-				"pen": "33",
-				"wd": ".2",
-				"cl": "#8B0000",
+				"name": "bentley",
+				"st": "9",
+				"r1": "250e",
+				"r2": "180h",
+				"r3": "15h",
+				"pen": "15",
+				"wd": ".06",
+				"cl": "#004080",
 				"sp": "1",
 			},
 
-			{
-				"name": "tubular",
-				"st": "120",
-				"r1": "60e",
-				"r2": "120h",
-				"r3": "22h",
-				"pen": "5.5",
-				"wd": ".1",
-				"cl": "#006400",
-				"sp": "1",
-			},
+
 		],
 		"penColors": [{
 			"name": "black",
