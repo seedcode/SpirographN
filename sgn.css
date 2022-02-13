@@ -28,7 +28,7 @@ div.pad {
 div.rotors {
 	margin-left: -6px;
 	padding-left: 6px;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 div.sidebar {
