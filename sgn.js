@@ -409,13 +409,13 @@ var sgn = (function(settings) {
 			//update pen radius
 			document.getElementById(settings.idNames.pen).value = newRad;
 
+			var rotorsDiv = document.getElementById('rotors');
+			rotorsDiv.style.height = (settings.numRotors * 27) + (settings.numRotors * 4.3 )   + 'px';
+
 			//if this is the second rotor we need our delete button.
 			if (settings.numRotors === 2) {
 				deleteButton();
 			}
-
-			var rotorsDiv = document.getElementById('rotors');
-			rotorsDiv.style.height = (settings.numRotors * 27) + (settings.numRotors * 4.3 )   + 'px';
 
 			//scroll to the bottom
 			document.getElementById(settings.idNames.rotors).scrollTop = document.getElementById(settings.idNames.rotors).scrollHeight;
@@ -466,14 +466,12 @@ var sgn = (function(settings) {
 			if (!settings.draw) {
 				drawCircles();
 			}
-
-
-			var rotorsDiv = document.getElementById('rotors');
-			rotorsDiv.style.height = (settings.numRotors * 27) + (settings.numRotors * 4.3 )   + 'px';
-
 			//scroll to the bottom
 			var div = document.getElementById(settings.idNames.rotors);
 			div.scrollTop = div.scrollHeight;
+			
+			var rotorsDiv = document.getElementById('rotors');
+			rotorsDiv.style.height = (settings.numRotors * 27) + (settings.numRotors * 4.3 )   + 'px';
 		});
 
 	}
@@ -1127,7 +1125,7 @@ var sgn = (function(settings) {
 		var ctx = settings.canvasPen.getContext("2d");
 		ctx.beginPath();
 		ctx.strokeStyle = settings.curveColor;
-		//seems like a bug in chrome that doesn't like .01 pen width. Adding a tiny bit fixes for some reason.
+		//x
 		ctx.lineWidth = parseFloat(settings.curveWidth) + 0.001;
 		ctx.moveTo(settings.curvePoints[0].x, settings.curvePoints[0].y);
 		ctx.lineTo(settings.curvePoints[1].x, settings.curvePoints[1].y);
@@ -1295,7 +1293,11 @@ var sgn = (function(settings) {
 					loadValues(settings.presets[c]);
 				}
 			};
-			document.getElementById(settings.idNames.stator).focus()
+			document.getElementById(settings.idNames.stator).focus();
+			var rotorsDiv = document.getElementById('rotors');
+			if(rotorsDiv){
+				rotorsDiv.style.height = (settings.numRotors * 27) + (settings.numRotors * 4.3 )   + 'px';
+			}
 		});
 	}
 
@@ -1524,7 +1526,7 @@ var sgn = (function(settings) {
 			"angle": "angle",
 		},
 		"presets": [
-			
+
 			{
 				"name": "liner",
 				"st": "300",
@@ -1595,6 +1597,18 @@ var sgn = (function(settings) {
 			},
 
 			{
+				"name": "drop",
+				"st": "100",
+				"r1": "99e",
+				"r2": "66e",
+				"r3": "33e",
+				"pen": "33",
+				"wd": ".2",
+				"cl": "#d21d00",
+				"sp": "200",
+			},
+
+			{
 				"name": "habitrail",
 				"st": "300",
 				"r1": "150h",
@@ -1613,6 +1627,29 @@ var sgn = (function(settings) {
 				"r2": "11e",
 				"pen": "66",
 				"wd": ".2",
+				"cl": "#000080",
+				"sp": "1",
+			},
+
+			{
+				"name": "arclight",
+				"st": "125",
+				"r1": "132e",
+				"r2": "66h",
+				"r3": "3e",
+				"pen": "24",
+				"wd": ".1",
+				"cl": "#a0631c",
+				"sp": "1",
+			},
+
+			{
+				"name": "the bloom",
+				"st": "100",
+				"r1": "36e",
+				"r2": "100e",
+				"pen": "100",
+				"wd": ".1",
 				"cl": "#000080",
 				"sp": "1",
 			},
@@ -1780,6 +1817,18 @@ var sgn = (function(settings) {
 			},
 
 			{
+				"name": "sand dollar",
+				"st": "250",
+				"r1": "25h",
+				"r2": "67e",
+				"r3": "33e",
+				"pen": "33",
+				"wd": ".03",
+				"cl": "#289528",
+				"sp": "1000",
+			},
+
+			{
 				"name": "super star",
 				"st": "250",
 				"r1": "90h",
@@ -1790,6 +1839,20 @@ var sgn = (function(settings) {
 				"pen": "17",
 				"wd": ".03",
 				"cl": "#011993",
+				"sp": "1000",
+			},
+
+			{
+				"name": "fader",
+				"st": "300",
+				"r1": "90h",
+				"r2": "45e",
+				"r3": "30e",
+				"r4": "22.5e",
+				"r5": "19.3e",
+				"pen": "19.3",
+				"wd": ".01",
+				"cl": "#cc1470",
 				"sp": "1000",
 			},
 
@@ -1846,6 +1909,31 @@ var sgn = (function(settings) {
 			},
 
 			{
+				"name": "sauron",
+				"st": "300",
+				"r1": "98h",
+				"r2": "37.5h",
+				"r3": "37.5e",
+				"r4": "18.75e",
+				"pen": "18.75",
+				"wd": ".02",
+				"cl": "#8a2e2e",
+				"sp": "1000",
+			},
+
+			{
+				"name": "reverb",
+				"st": "9",
+				"r1": "250h",
+				"r2": "180h",
+				"r3": "15h",
+				"pen": "15",
+				"wd": ".07",
+				"cl": "#2a9bb2",
+				"sp": "1000",
+			},
+
+			{
 				"name": "bentley",
 				"st": "9",
 				"r1": "250e",
@@ -1854,7 +1942,7 @@ var sgn = (function(settings) {
 				"pen": "15",
 				"wd": ".06",
 				"cl": "#004080",
-				"sp": "1",
+				"sp": "1000",
 			},
 
 
