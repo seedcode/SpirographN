@@ -25,6 +25,5 @@ Unfortunately, the canvas line rendering on Safari is not precise enough to get 
 [https://seedcode.com/SpirographN/sgn.html?pre=tubular](https://seedcode.com/SpirographN/sgn.html?pre=tubular)
 [![truelove](img/burgessshale.png)](img/burgessshale.png)
 [https://seedcode.com/SpirographN/sgn.html?pre=burgess%20shale](https://seedcode.com/SpirographN/sgn.html?pre=burgess%20shale)
-[![truelove](img/darkknight.png)](img/darkknight.png)
-[https://seedcode.com/SpirographN/sgn.html?pre=dark%20knight](https://seedcode.com/SpirographN/sgn.html?pre=dark%20knight)
+
 
